@@ -46,6 +46,13 @@
         /_==__==========__==_ooo__ooo=_/'   /___________,"
 */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// ReSharper disable ReplaceWithSingleCallToCount
+// ReSharper disable InvokeAsExtensionMethod
+
 namespace KeLi.ReplaceWithSingleCallToCountBug.App
 {
     internal class Program
@@ -58,40 +65,40 @@ namespace KeLi.ReplaceWithSingleCallToCountBug.App
 
         private static void ShowRightCase()
         {
-            //var fruits = new List<string>()
-            //{
-            //    "Apple",
-            //    "Banana",
-            //    "Peach",
-            //    "Orange"
-            //};
+            var fruits = new List<string>()
+            {
+                "Apple",
+                "Banana",
+                "Peach",
+                "Orange"
+            };
 
             // Raw code.
-            //return fruits.Where(w => w.In("Apple", "Peach")).Count() == 2;
+            Console.WriteLine(fruits.Where(w => w.In("Apple", "Peach")).Count() == 2);
 
-            // Sugget step 1.
-            //return fruits.Count(w => LinqToObjectExtension.In(w, "Apple", "Peach")) == 2;
+            // Suggets for step 1.
+            Console.WriteLine(fruits.Count(w => LinqExtension.In(w, "Apple", "Peach")) == 2);
 
-            // Sugget step 2.
-            //return fruits.Count(w => w.In("Apple", "Peach")) == 2;
+            // Suggets for step 2.
+            Console.WriteLine(fruits.Count(w => w.In("Apple", "Peach")) == 2);
         }
 
         private static void ShowWrongCase()
         {
-            //var persons = new[]
-            //{
-            //    new { Fruit = "Apple", Name = "Jake" },
-            //    new { Fruit = "Peach", Name = "Tony" },
-            //};
+            var persons = new[]
+            {
+                new { Fruit = "Apple", Name = "Jake" },
+                new { Fruit = "Peach", Name = "Tony" },
+            };
 
-            //Raw code.
-            //return persons.Where(w => w.Name.In("Apple", "Peach")).Count() == 2;
+            // Raw code.
+            Console.WriteLine(persons.Where(w => w.Name.In("Apple", "Peach")).Count() == 2);
 
-            //Sugget step 1.
-            //return persons.Count(w => LinqToObjectExtension.In("Apple", "Peach")) == 2;
+            // Suggets for step 1.
+            Console.WriteLine(persons.Count(w => LinqExtension.In("Apple", "Peach")) == 2);
 
-            //Sugget step 2.
-            //return persons.Count(w => "Apple".In("Peach")) == 2;
+            // Suggets for step 2.
+            Console.WriteLine(persons.Count(w => "Apple".In("Peach")) == 2);
         }
     }
 }
